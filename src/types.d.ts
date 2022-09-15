@@ -11,3 +11,14 @@ declare module '*.less' {
   const unuse: () => void;
   export { use, unuse };
 }
+
+interface Window {
+  bridgeCallHandler: (cmd, param, callback?: (data) => void) => void;
+  bridgeCallHandlerPromise: (str: string, data: any, nativeCallbackNeeded: boolean) => Promise<void>;
+  bridgeRegisterHandler: (str: string, callback?: (data) => void) => void;
+  bridgeUnregisterHandler: (name: string) => any;
+  bridgeInit: (callback?: () => void) => any;
+  WebViewJavascriptBridge: {
+    callHandler:(str: string, data: any, callback?: (data) => void) => void;
+  }
+}

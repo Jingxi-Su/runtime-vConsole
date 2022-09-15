@@ -274,22 +274,28 @@ export class VConsoleLogModel extends VConsoleModel {
       origData: [cmd],
     }, { cmdType: 'input' });
 
-    let result = void 0;
+    const data = 
+    // TODO:传cmd调用bridge执行JS代码得到返回值result，异步
+    window.WebViewJavascriptBridge.callHandler('consoleCommand', {'command': cmd}, (result)=>{
+      this.addLog({
+        type: 'log',
+        origData: [JSON.parse(result)],
+      }, { cmdType: 'output' });
+    })
+    // try {
+    //   result = eval.call(window, '(' + cmd + ')');
+    // } catch (e) {
+    //   try {
+    //     result = eval.call(window, cmd);
+    //   } catch (e) {
+    //     ;
+    //   }
+    // }
 
-    try {
-      result = eval.call(window, '(' + cmd + ')');
-    } catch (e) {
-      try {
-        result = eval.call(window, cmd);
-      } catch (e) {
-        ;
-      }
-    }
-
-    this.addLog({
-      type: 'log',
-      origData: [result],
-    }, { cmdType: 'output' });
+    // this.addLog({
+    //   type: 'log',
+    //   origData: [result],
+    // }, { cmdType: 'output' });
   };
 
   protected _extractPluginIdByLog(log: IVConsoleLog) {

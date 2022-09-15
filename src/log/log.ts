@@ -33,7 +33,7 @@ export class VConsoleLogPlugin extends VConsoleSveltePlugin {
   }
 
   public onAddTopBar(callback: Function) {
-    const types = ['All', 'Log', 'Info', 'Warn', 'Error'];
+    const types = ['All', 'Log', 'Info', 'Warn', 'Debug','Error'];
     const btnList = [];
     for (let i = 0; i < types.length; i++) {
       btnList.push({
