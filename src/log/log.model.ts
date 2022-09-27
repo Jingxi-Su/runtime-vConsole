@@ -228,7 +228,7 @@ export class VConsoleLogModel extends VConsoleModel {
       return store;
     });
   }
-  
+
   /**
    * Add a vConsole log.
    */
@@ -258,7 +258,7 @@ export class VConsoleLogModel extends VConsoleModel {
       this._pushLogList(pluginId, log);
       this._limitLogListLength();
     }
-    
+
     if (!opt?.noOrig) {
       // logging to original console
       this.callOriginalConsole(item.type, ...item.origData);
@@ -274,14 +274,14 @@ export class VConsoleLogModel extends VConsoleModel {
       origData: [cmd],
     }, { cmdType: 'input' });
 
-    const data = 
-    // TODO:传cmd调用bridge执行JS代码得到返回值result，异步
-    window.WebViewJavascriptBridge.callHandler('consoleCommand', {'command': cmd}, (result)=>{
-      this.addLog({
-        type: 'log',
-        origData: [JSON.parse(result)],
-      }, { cmdType: 'output' });
-    })
+    const data =
+      // 传cmd调用bridge执行JS代码得到返回值result，异步
+      window.WebViewJavascriptBridge.callHandler('consoleCommand', { 'command': cmd }, (result) => {
+        this.addLog({
+          type: 'log',
+          origData: [JSON.parse(result)],
+        }, { cmdType: 'output' });
+      })
     // try {
     //   result = eval.call(window, '(' + cmd + ')');
     // } catch (e) {
